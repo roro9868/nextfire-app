@@ -11,7 +11,7 @@ export default function Navbar() {
       <ul>
         <li>
           <Link href="/">
-            <button className="btn-logo">FOAM APP</button>
+            <button className="btn-logo">ARBUCKLE</button>
           </Link>
         </li>
 
