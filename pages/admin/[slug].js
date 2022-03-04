@@ -12,6 +12,7 @@ import ReactMarkdown from 'react-markdown';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
 import { doc,updateDoc,serverTimestamp } from 'firebase/firestore';
+import ImageUploader from '../../components/ImageUploader';
 
 export default function AdminPostEdit(props) {
   return (
@@ -70,7 +71,7 @@ function PostForm({ defaultValues, postRef, preview }) {
 
     reset({ content, published });
 
-    toast.success('Post updated successfully!')
+    toast.success('Post updated successfully! Publish set to: ' + published)
   };
 
   return (
@@ -82,8 +83,9 @@ function PostForm({ defaultValues, postRef, preview }) {
       )}
 
       <div className={preview ? styles.hidden : styles.controls}>
-  
-        <textarea name="content" {...register("content", {            
+        <ImageUploader />
+
+        <textarea {...register("content", {            
                     required: "content is required",
                     maxLength: {
                         value: 20000,
@@ -102,7 +104,7 @@ function PostForm({ defaultValues, postRef, preview }) {
         />
 
         <fieldset>
-          <input className={styles.checkbox} name="published" type="checkbox" {...register('nameregister2')} />
+          <input className={styles.checkbox} type="checkbox" {...register('published')} />
           <label>Published</label>
         </fieldset>
 

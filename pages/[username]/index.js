@@ -6,10 +6,10 @@ import { collection, where, query as firestoreQuery, limit, orderBy, getDocs} fr
 
 export async function getServerSideProps({ query }) {
   const { username } = query;
-  console.log('outputing username: ' + username)
+  // console.log('outputing username: ' + username)
   const userDoc = await getUserWithUsername(username);
+  // console.log('outputing userdoc: ' + userDoc.data)
 
-  // console.log(username);
   // If no user, short circuit to 404 page
   if (!userDoc) {
     console.log('no user found');
