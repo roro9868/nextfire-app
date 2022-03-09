@@ -1,9 +1,23 @@
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, onSnapshot } from "firebase/firestore";
 
 import { firestore, postToJSON } from "../../lib/firebase";
 import { QuestionForm } from "../../components/Question/QuestionForm";
+import { useEffect, useState } from "react";
 
-export default function Questions({ posts }) {
+export default function Questions({ questions = [] }) {
+  const [posts, setPosts] = useState(questions);
+  useEffect(() => {
+    const unsub = onSnapshot(collection(firestore, "questions"), (snap) => {
+      const data = [];
+
+      snap.forEach((doc) => {
+        data.push(postToJSON(doc));
+      });
+      setPosts(data);
+    });
+    return unsub;
+  }, []);
+
   return (
     <div>
       <QuestionForm />
@@ -26,7 +40,7 @@ export async function getStaticProps() {
   ).docs.map(postToJSON);
   return {
     props: {
-      posts: questions,
+      questions,
     },
     revalidate: 10, // In seconds
   };
